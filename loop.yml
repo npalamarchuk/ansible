@@ -1,0 +1,11 @@
+- name: Loop example
+  hosts: host2
+  become: yes
+
+  tasks:
+  - name: Say hello to all
+    debug: msg="hello {{item}}"
+    loop:
+      - "Vasya"
+      - "Masha"
+      - "Petya"

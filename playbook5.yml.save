@@ -1,0 +1,56 @@
+- name: install apache
+  hosts: k8s_hosts
+  become: yes
+  vars:
+    src_dir: ./www
+    dest_dir: /var/www/html
+  tasks:
+    - debug:
+        var: ansible_os_family
+
+    - block: #---block for RedHat-----
+      
+        - name: install apache on RedHat
+          yum: name=httpd state=latest
+  
+        - name: apache start for RedHat
+          service: name=httpd state=started
+
+      when: ansible_os_family == "RedHat"
+   
+    - block: #-----block for debian-----
+
+        - name: install apache on Debian
+          yum: name=apache2 state=latest
+     
+        - name: apache start for Debian
+          service: name=apache2 state=started
+
+      when: ansible_os_family == "Debian"
+
+#    - name: delete old web page
+#      file: path="{{dest_dir}}/{{item}}" state=absent
+#      loop:
+#        - index.j2
+#        - style.css
+
+#    - name: copy web page
+#      copy: src={{item}} dest={{dest_dir}}
+#      with_fileglob: "{{src_dir}}/*.*"
+
+  dest_dir: /var/www/html   - name: generate html page
+      template: src={{src_dir}}/index.j2 dest={{dest_dir}}/index.html
+      notify:
+         - restart apache on RedHat
+         - restart apache on Debian
+
+
+  handlers:
+
+    - name: restart apache on RedHat
+      service: name=httpd state=restarted
+      when: ansible_os_family == "RedHat"
+
+    - name: restart apache on Debian
+      service: name=apache2 state=restarted
+      when: ansible_os_family == "Debian"

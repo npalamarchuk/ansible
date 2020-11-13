@@ -1,0 +1,8 @@
+- name: uninstall apache
+  hosts: k8s_hosts
+  become: yes
+
+  tasks:
+    - name: delete apache
+      apt: name=apache2 state=absent
+  

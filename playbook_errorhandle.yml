@@ -1,0 +1,24 @@
+- name: Error handling
+  hosts: k8s_hosts
+  become: yes
+  any_errors_fatal: true
+
+  tasks:
+#  - name: delete tree 
+#    apt: name=tree state=absent
+
+  - name: install tree
+    apt: name=tree state=latest
+    
+    ignore_errors: yes  
+
+  - name: task 3
+    shell: echo world
+    register: results
+    failed_when: results.rc==0
+    
+  - debug:
+      var: results
+
+  - name: task 4
+    shell: echo Hi world

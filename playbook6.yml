@@ -1,0 +1,9 @@
+- name: delete apache
+  hosts: host2
+  become: yes
+  
+  tasks:
+  - name: delete apache
+    include: delete-apache.yml
+    delegate_to: host3
+#    apt: name=apache2 state=absent

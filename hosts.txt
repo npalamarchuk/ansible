@@ -1,0 +1,10 @@
+[k8s_master]
+master ansible_host=192.168.0.181
+[k8s_hosts]
+host2  ansible_host=192.168.0.182 owner=host2
+host3  ansible_host=192.168.0.183 owner=host3
+host4  ansible_host=192.168.0.184 owner=host4
+
+[all_hosts:children]
+k8s_master
+k8s_hosts

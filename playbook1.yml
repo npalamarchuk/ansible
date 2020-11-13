@@ -1,0 +1,22 @@
+- name: test connection
+  hosts: all_hosts
+  become: yes
+  
+  vars:
+    msg1: hello
+    msg2: there
+    secret: qwerty11
+  tasks:
+  - debug:
+      var: ansible_distribution
+  - shell: uptime
+    register: uptime_result
+  - debug:
+      var: uptime_result.stdout
+  - debug:
+      msg: "my message {{msg1}}"
+  - debug:
+      msg: "address of this server {{ansible_host}}"
+  - set_fact: fullmessage="{{msg1}} {{msg2}} from {{ansible_host}}"
+  - debug:
+      var: fullmessage

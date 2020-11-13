@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#echo "input yor name"
+#read name
+#echo "input your surname"
+#read surname
+echo "welcome" $2 $1
+#echo "var dirrectory"
+#ls -lha /var/
+

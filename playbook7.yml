@@ -1,0 +1,29 @@
+- name: Delgate to example
+  hosts: k8s_hosts
+  become: yes
+
+  tasks:
+  - name: ping
+    ping:
+
+  - name: unregister from load balancer
+    shell: echo this server {{inventory_hostname}} was unregistered, node name {{ansible_nodename}} >> /home/log.txt
+    delegate_to: master
+
+  - name: update db
+    shell: echo updating db...
+    run_once: true
+   
+  #- name: restart servers
+  #  shell: sleep 3 && reboot now
+  #  async: 1
+  #  poll: 0
+
+  - name: wait servers come up online
+    wait_for:
+      host: "{{inventory_hostname}}"
+      state: started
+      delay: 5
+      timeout: 40
+    delegate_to: master
+ 

@@ -1,0 +1,10 @@
+- name: install tree
+  hosts: all_hosts
+  become: yes
+  
+  tasks:
+  - name: install tree
+    apt: name=tree state=present
+
+  - name: show tree
+    shell: tree ~
