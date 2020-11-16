@@ -7,4 +7,4 @@
 echo "welcome" $2 $1
 #echo "var dirrectory"
 #ls -lha /var/
-
+echo "this is test"
