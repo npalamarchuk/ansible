@@ -28,7 +28,9 @@ jobs:
           echo "app name ${{ env.APP_NAME }}"
       
       - name: list dirrectory
-        run: ls -lha
+        run: |
+          pwd
+          ls -lha
       
       - name: disk space
         run: df -h
