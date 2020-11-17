@@ -20,11 +20,18 @@ jobs:
     steps:
       - name: testing
         run: echo "Hello ${{ github.event.inputs.name }} from testing"
+      
       - name: execute few commands
         run: |
           echo "message1"
           echo "message2"
           echo "app name ${{ env.APP_NAME }}"
+      
+      - name: list dirrectory
+        run: ls -lha
+      
+      - name: disk space
+        run: df -h
         
   deploy:  
     runs-on: ubuntu-latest
@@ -33,5 +40,6 @@ jobs:
     steps:
       - name: deploy
         run: echo "Hello ${{ github.event.inputs.name }} from deploy"
+      
       - name: print deploy message
         run: echo "deployment name ${{ env.PACKAGE_NAME }}" 
